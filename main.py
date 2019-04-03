@@ -2,7 +2,7 @@
 
 import json
 
-from flask import Flask
+from flask import Flask, redirect
 from flask import request
 
 from google.appengine.ext import blobstore
@@ -17,5 +17,6 @@ def image_url():
 
 	filename = (bucket + "/" + image)
 	servingImage = images.get_serving_url(None, filename='/gs/' + filename)
+	thumbnail = (servingImage + "=s150-c")
 
-	return(servingImage)
+	return redirect(thumbnail, code=302)
